@@ -1,5 +1,5 @@
-resource "digitalocean_tag" "master" {
-  name = "master"
+resource "digitalocean_tag" "manager" {
+  name = "manager"
 }
 
 module "master_node" {
@@ -10,7 +10,7 @@ module "master_node" {
   size = "${var.size}"
   quantity = "${var.quantity}"
   ssh_key = "${var.ssh_key}"
-  tags = ["${digitalocean_tag.master.id}"]
+  tags = ["${digitalocean_tag.manager.id}"]
 }
 
 resource "null_resource" "swarm_init" {
