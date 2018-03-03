@@ -2,8 +2,8 @@ resource "digitalocean_tag" "worker" {
   name = "worker"
 }
 
-module "worker_node" {
-  source = "../swarm-node"
+module "node" {
+  source = "../node"
   type = "worker"
   domain = "${var.domain}"
   region = "${var.region}"

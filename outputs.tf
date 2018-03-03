@@ -1,5 +1,5 @@
-output "master_addresses" {
-  value = "${module.master.addresses}"
+output "manager_addresses" {
+  value = "${module.manager.addresses}"
 }
 
 output "worker_addresses" {

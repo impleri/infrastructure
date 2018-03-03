@@ -1,15 +1,15 @@
-module "master" {
-  source = "./modules/master-node"
+module "manager" {
+  source = "./modules/manager"
   domain = "${var.domain}"
   region = "${var.regions["${var.region}"]}"
-  size = "${var.master_size}"
-  quantity = "${var.master_qty}"
+  size = "${var.manager_size}"
+  quantity = "${var.manager_qty}"
   ssh_key = "${var.ssh_key}"
   ssh_keyfile = "${var.ssh_keyfile}"
 }
 
 module "worker" {
-  source = "./modules/worker-node"
+  source = "./modules/worker"
   domain = "${var.domain}"
   region = "${var.regions["${var.region}"]}"
   size = "${var.worker_size}"

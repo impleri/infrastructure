@@ -6,8 +6,8 @@ variable "ssh_key" {}
 variable "domain" {}
 variable "region" {}
 
-variable "master_qty" {}
-variable "master_size" {}
+variable "manager_qty" {}
+variable "manager_size" {}
 
 variable "worker_qty" {}
 variable "worker_size" {}

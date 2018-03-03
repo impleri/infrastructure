@@ -4,8 +4,8 @@ ssh_key="12345"
 region="east"
 domain="example.com"
 
-master_qty="1"
-master_size="small"
+manager_qty="1"
+manager_size="small"
 
 worker_qty="2"
 worker_size="medium"
