@@ -21,3 +21,8 @@ following could be adapted for most hosting providers.
 4. Register the IP addresses from terraform output.
 
 Steps 2-3 can be automated in `run.sh`
+
+
+## TODO
+
+- [ ] Add DNS handling via DigitalOcean
