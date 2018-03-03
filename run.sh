@@ -9,5 +9,4 @@ fi
 terraform init
 terraform apply
 
-ansible-playbook --inventory-file=`which terraform-inventory` playbooks/bootstrap.yml
 ansible-playbook --inventory-file=`which terraform-inventory` playbooks/swarm.yml
