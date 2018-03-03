@@ -5,6 +5,7 @@ module "master" {
   size = "${var.master_size}"
   quantity = "${var.master_qty}"
   ssh_key = "${var.ssh_key}"
+  ssh_keyfile = "${var.ssh_keyfile}"
 }
 
 module "worker" {

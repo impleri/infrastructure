@@ -5,3 +5,4 @@ variable "quantity" {
     default = "1"
 }
 variable "ssh_key" {}
+variable "ssh_keyfile" {}

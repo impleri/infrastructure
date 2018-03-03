@@ -1,3 +1,5 @@
+variable "ssh_keyfile" {}
+
 variable "do_token" {}
 variable "ssh_key" {}
 

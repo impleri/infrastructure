@@ -19,4 +19,8 @@ variable "quantity" {
     default = "1"
 }
 
+variable "tags" {
+    type = "list"
+}
+
 variable "ssh_key" {}
