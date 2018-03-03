@@ -1,0 +1,121 @@
+---
+- hosts: type_digitalocean_droplet
+  remote_user: core
+  gather_facts: False
+  vars:
+    ansible_python_interpreter: "/home/core/bin/python"
+  roles:
+    - defunctzombie.coreos-bootstrap
+
+- hosts: manager
+  remote_user: core
+  vars:
+    ansible_python_interpreter: "/home/core/bin/python"
+  tasks:
+    - name: determine swarm status
+      shell: >
+        docker info | egrep '^Swarm: ' | cut -d ' ' -f2
+      register: swarm_status
+
+    - name: add to connected_managers group
+      add_host:
+        hostname: "{{ item }}"
+        groups: connected_managers
+      with_items: "{{ ansible_play_hosts | default(play_hosts) }}"
+      when: "'active' in hostvars[item].swarm_status.stdout_lines"
+      run_once: true
+
+    - name: add to disconnected_managers group
+      add_host:
+        hostname: "{{ item }}"
+        groups: disconnected_managers
+      with_items: "{{ ansible_play_hosts | default(play_hosts) }}"
+      when: "'active' not in hostvars[item].swarm_status.stdout_lines"
+      run_once: true
+
+- hosts: worker
+  remote_user: core
+  vars:
+    ansible_python_interpreter: "/home/core/bin/python"
+  tasks:
+    - name: determine swarm status
+      shell: >
+        docker info | egrep '^Swarm: ' | cut -d ' ' -f2
+      register: swarm_status
+
+    - name: create connected_workers group
+      add_host:
+        hostname: "{{ item }}"
+        groups: connected_workers
+      with_items: "{{ ansible_play_hosts | default(play_hosts) }}"
+      when: "'active' in hostvars[item].swarm_status.stdout_lines"
+      run_once: true
+
+    - name: create disconnected_workers group
+      add_host:
+        hostname: "{{ item }}"
+        groups: disconnected_workers
+      with_items: "{{ ansible_play_hosts | default(play_hosts) }}"
+      when: "'active' not in hostvars[item].swarm_status.stdout_lines"
+      run_once: true
+
+- hosts: connected_managers[0]
+  remote_user: core
+  vars:
+    ansible_python_interpreter: "/home/core/bin/python"
+    iface: "{{ swarm_iface | default('eth0') }}"
+  tasks:
+    - name: retrieve swarm manager token
+      shell: docker swarm join-token -q manager
+      register: swarm_manager_token
+
+    - name: retrieve swarm worker token
+      shell: docker swarm join-token -q worker
+      register: swarm_worker_token
+
+    - name: populate list of manager ips
+      add_host:
+        hostname: "{{ hostvars[item]['ansible_' + iface]['ipv4']['address'] }}"
+        groups: swarm_manager_ips
+      with_items: "{{ ansible_play_hosts | default(play_hosts) }}"
+
+- hosts: disconnected_managers
+  remote_user: core
+  vars:
+    ansible_python_interpreter: "/home/core/bin/python"
+    token: "{{ hostvars[groups['connected_managers'][0]]['swarm_manager_token']['stdout'] }}"
+  tasks:
+    - name: join manager nodes to cluster
+      shell: >
+        docker swarm join
+        --advertise-addr={{ swarm_iface | default('eth0') }}:2377
+        --token={{ token }}
+        {{ groups['swarm_manager_ips'][0] }}:2377
+
+- hosts: disconnected_workers
+  remote_user: core
+  vars:
+    ansible_python_interpreter: "/home/core/bin/python"
+    token: "{{ hostvars[groups['connected_managers'][0]]['swarm_worker_token']['stdout'] }}"
+  tasks:
+    - name: join worker nodes to cluster
+      shell: >
+        docker swarm join
+        --advertise-addr={{ swarm_iface | default('eth0') }}:2377
+        --token={{ token }}
+        {{ groups['swarm_manager_ips'][0] }}:2377
+
+- hosts: connected_managers[0]
+  remote_user: core
+  vars:
+    ansible_python_interpreter: "/home/core/bin/python"
+    iface: "{{ swarm_iface | default('eth0') }}"
+  tasks:
+    - name: determine confused managers
+      shell: docker node list | egrep 'Active\s+Leader' | cut -d ' ' -f1
+      register: swarm_active_managers
+
+    - name: dedicate confused managers
+      shell: docker node update --availability drain {{ item }}
+      with_items: "{{ swarm_active_managers.stdout_lines }}"
+
