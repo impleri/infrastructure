@@ -1,5 +1,5 @@
 module "master" {
-  source = "./master-node"
+  source = "./modules/master-node"
   domain = "${var.domain}"
   region = "${var.regions["${var.region}"]}"
   size = "${var.master_size}"
@@ -9,7 +9,7 @@ module "master" {
 }
 
 module "worker" {
-  source = "./worker-node"
+  source = "./modules/worker-node"
   domain = "${var.domain}"
   region = "${var.regions["${var.region}"]}"
   size = "${var.worker_size}"
