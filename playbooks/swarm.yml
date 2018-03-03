@@ -2,6 +2,14 @@
 - hosts: type_digitalocean_droplet
   remote_user: core
   gather_facts: False
+  tasks:
+  - name: Add the node host keys to known hosts
+    connection: local
+    shell: "ssh-keyscan -H {{ inventory_hostname }} >> ~/.ssh/known_hosts"
+
+- hosts: type_digitalocean_droplet
+  remote_user: core
+  gather_facts: False
   vars:
     ansible_python_interpreter: "/home/core/bin/python"
   roles:
