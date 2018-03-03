@@ -1,0 +1,24 @@
+{
+    "ignition": {
+        "version": "2.1.0"
+    },
+    "systemd": {
+        "units": [
+            {
+                "name": "iptables-restore.service",
+                "enabled": true
+            }
+        ]
+    },
+    "storage": {
+        "files": [
+            {
+                "filesystem": "root",
+                "path": "/var/lib/iptables/rules-save",
+                "contents": {
+                    "source": "data:text/plain;base64,KmZpbHRlcgo6SU5QVVQgRFJPUCBbMDowXQo6Rk9SV0FSRCBEUk9QIFswOjBdCjpPVVRQVVQgQUNDRVBUIFszODo2NTQwXQotQSBJTlBVVCAtaSBsbyAtaiBBQ0NFUFQKLUEgSU5QVVQgLWkgZXRoMSAtaiBBQ0NFUFQKLUEgSU5QVVQgLW0gY29ubnRyYWNrIC0tY3RzdGF0ZSBSRUxBVEVELEVTVEFCTElTSEVEIC1qIEFDQ0VQVAotQSBJTlBVVCAtcCB0Y3AgLW0gdGNwIC0tZHBvcnQgMjIgLWogQUNDRVBUCi1BIElOUFVUIC1wIHRjcCAtbSB0Y3AgLS1kcG9ydCA4MCAtaiBBQ0NFUFQKLUEgSU5QVVQgLXAgdGNwIC1tIHRjcCAtLWRwb3J0IDQ0MyAtaiBBQ0NFUFQKLUEgSU5QVVQgLXAgdGNwIC1tIHRjcCAtLWRwb3J0IDIzNzYgLWogQUNDRVBUCi1BIElOUFVUIC1wIHRjcCAtbSB0Y3AgLS1kcG9ydCAyMzc3IC1qIEFDQ0VQVAotQSBJTlBVVCAtcCB0Y3AgLW0gdGNwIC0tZHBvcnQgNzk0NiAtaiBBQ0NFUFQKLUEgSU5QVVQgLXAgdWRwIC1tIHVkcCAtLWRwb3J0IDc5NDYgLWogQUNDRVBUCi1BIElOUFVUIC1wIHVkcCAtbSB1ZHAgLS1kcG9ydCA0Nzg5IC1qIEFDQ0VQVAotQSBJTlBVVCAtcCBpY21wIC1tIGljbXAgLS1pY21wLXR5cGUgMCAtaiBBQ0NFUFQKLUEgSU5QVVQgLXAgaWNtcCAtbSBpY21wIC0taWNtcC10eXBlIDMgLWogQUNDRVBUCi1BIElOUFVUIC1wIGljbXAgLW0gaWNtcCAtLWljbXAtdHlwZSAxMSAtaiBBQ0NFUFQKQ09NTUlUCg=="
+                }
+            }
+        ]
+    }
+}
