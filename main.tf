@@ -47,3 +47,10 @@ resource "digitalocean_loadbalancer" "public" {
 
   droplet_ids = ["${module.worker.droplets}"]
 }
+
+resource "digitalocean_record" "public" {
+  domain = "${var.domain}"
+  type   = "A"
+  name   = "${var.ingress_name}"
+  value  = "${digitalocean_loadbalancer.public.ip}"
+}
