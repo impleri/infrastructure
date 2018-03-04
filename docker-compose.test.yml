@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  whoami:
+    image: jwilder/whoami
+    environment:
+      - VIRTUAL_HOST=cloud.impleri.com
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external:
+      name: infra_default
