@@ -1,4 +1,5 @@
 variable "domain" {}
+variable "ingress_name" {}
 variable "region" {}
 variable "size" {}
 variable "quantity" {

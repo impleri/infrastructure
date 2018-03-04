@@ -5,6 +5,8 @@ variable "domain" {
     default = "example.com"
 }
 
+variable "ingress_name" {}
+
 variable "size" {}
 variable "sizes" {
     type = "map"

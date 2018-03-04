@@ -4,6 +4,7 @@ variable "do_token" {}
 variable "ssh_key" {}
 
 variable "domain" {}
+variable "ingress_name" {}
 variable "region" {}
 
 variable "manager_qty" {}

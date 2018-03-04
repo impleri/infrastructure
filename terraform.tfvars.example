@@ -3,6 +3,7 @@ do_token = "xxxx"
 ssh_key="12345"
 region="east"
 domain="example.com"
+ingress_name="cloud"
 
 manager_qty="1"
 manager_size="small"

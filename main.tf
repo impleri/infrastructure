@@ -1,6 +1,7 @@
 module "manager" {
   source = "./modules/manager"
   domain = "${var.domain}"
+  ingress_name = "${var.ingress_name}"
   region = "${var.regions["${var.region}"]}"
   size = "${var.manager_size}"
   quantity = "${var.manager_qty}"
@@ -11,6 +12,7 @@ module "manager" {
 module "worker" {
   source = "./modules/worker"
   domain = "${var.domain}"
+  ingress_name = "${var.ingress_name}"
   region = "${var.regions["${var.region}"]}"
   size = "${var.worker_size}"
   quantity = "${var.worker_qty}"
@@ -18,7 +20,7 @@ module "worker" {
 }
 
 resource "digitalocean_loadbalancer" "public" {
-  name = "${var.domain}"
+  name = "${var.ingress_name}${var.ingress_name == "" ? "" : "." }${var.domain}"
   region = "${var.regions["${var.region}"]}"
 
   forwarding_rule {

@@ -6,6 +6,7 @@ module "node" {
   source = "../node"
   type = "manager"
   domain = "${var.domain}"
+  ingress_name = "${var.ingress_name}"
   region = "${var.region}"
   size = "${var.size}"
   quantity = "${var.quantity}"
