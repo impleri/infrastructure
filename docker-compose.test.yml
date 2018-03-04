@@ -2,9 +2,11 @@ version: '3.4'
 
 services:
   whoami:
-    image: jwilder/whoami
+    image: nginx
     environment:
-      - VIRTUAL_HOST=cloud.impleri.com
+      VIRTUAL_HOST: cloud.impleri.com
+    ports:
+      - "80"
     networks:
       - proxy
 
