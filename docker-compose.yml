@@ -97,21 +97,6 @@ networks:
 
 volumes:
   nginx-conf:
-    driver_opts:
-      type: none
-      device: ${NGINX_PATH}/conf
-      o: bind
-  
   nginx-vhost:
-    driver_opts:
-      type: none
-      device: ${NGINX_PATH}/vhosts
-      o: bind
-  
   nginx-certs:
-    driver_opts:
-      type: none
-      device: ${NGINX_PATH}/certs
-      o: bind
-  
   nginx-html:
