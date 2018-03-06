@@ -18,6 +18,6 @@ following could be adapted for most hosting providers.
 1. Create Terraform `terraform.tfvars` with the right data.
 2. Use Terraform to generate droplets/nodes and a load balancer: `terraform init && terraform apply`
 3. Use Ansible to provision the nodes using inventory generated from Terraform-inventory: ```ansible-playbook --inventory-file=`which terraform-inventory` playbooks/swarm.yml```
-4. Register the IP addresses from terraform output.
+4. Register the IP addresses from terraform output (if not using DO's DNS).
 
-Steps 2-3 can be automated in `run.sh`
+Steps 2-4 can be automated in `run.sh`
